@@ -109,6 +109,7 @@ header {
     width: 100%;
     max-width: 200px;
     height: auto;
+    margin-top: 20px;
     display: flex;
     align-items: center;
     transition: 0.80s;
@@ -129,6 +130,7 @@ header {
     width: 100%;
     max-width: 150px;
     max-height: 150px;
+    margin-top: 30px;
     /* padding: 10px 0 0 0;   */
 }
 
@@ -215,7 +217,12 @@ header {
 
 
 /* Index page Ads section  */
+.faterads-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
+}
 .ads {
     display: flex;
     align-items: center;
@@ -225,6 +232,8 @@ header {
     margin-bottom: 20px;
     padding: 30px;
     gap: 30px;
+    width: 94%;
+    border-radius: 20px;
 }
 
 .ads div h2 {
@@ -304,7 +313,7 @@ header {
 }
 
 .buy-btn:hover {
-    background: green;
+    background: blue;
     color: black;
 }
 

@@ -13,7 +13,7 @@ $query = "SELECT * FROM admin WHERE email = '$adminemail'";
 $result = mysqli_query($connection, $query);
 
 if (!$result) {
-    die("Admin query failed: " . mysqli_error($connection));
+    echo"<script>alert('DATABASE ERROR.');</script>>";
 }
 else{
 
@@ -23,7 +23,7 @@ if (mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_array($result);
     $adminname = $row["username"];
 } else {
-    echo "Admin not found!";
+    echo "<script>alert('Admin not found!!!.');</script>";
     exit();
 }
 
@@ -31,7 +31,7 @@ $userquery = "SELECT * FROM user order by userid desc";
 $userresult = mysqli_query($connection, $userquery);
 
 if (!$userresult) {
-    die("User query failed: " . mysqli_error($connection));
+    echo"<script>alert('DATABASE ERROR.');</script>";
 }
 
 $usercount = mysqli_num_rows($userresult);
@@ -201,6 +201,9 @@ $usercount = mysqli_num_rows($userresult);
                 <li><a href="products.php">Product</a></li>
                 <li><a href="contactmessage.php">Contact Message</a></li>
                 <li><a href="orderlist.php"> Order List</a></li>
+                <li><a href="ads.php"> 
+                    Ads management
+                </a></li>
                 <li><a href="logout.php"> Logout</a></li>
             </ul>
         </nav>

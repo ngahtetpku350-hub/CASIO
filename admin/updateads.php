@@ -12,12 +12,12 @@ if (!isset($_SESSION["admin_email"])) {
 if (isset($_GET["product_id"])) {
     $product_id = $_GET["product_id"];
 
-    $query = "SELECT * FROM product where productid='$product_id'";
+    $query = "SELECT * FROM ads where id='$product_id'";
     $productresult = mysqli_query($connection, $query);
 
     if ($productresult) {
         $productrow = mysqli_fetch_array($productresult);
-        $originalimg = $productrow["productimg"];
+        $originalimg = $productrow["img"];
 
     } else {
         echo "<script>alert('DATABASE ERROR.');</script>";
@@ -28,13 +28,11 @@ if (isset($_GET["product_id"])) {
 if (isset($_POST["btnupdate"])) {
     $product_name = $_POST["name"];
     $product_price = $_POST["price"];
-    $product_quantity = $_POST["quantity"];
-    $product_description = $_POST["description"];
+    $product_quantity = $_POST["qty"];
+    $product_description = $_POST["des"];
     $product_image = $_FILES["image"]["name"];
 
     if ($product_image) {
-
-        // $query = "UPDATE product set productimg = '' where productid='$product_id'";
 
         $old_image_path = "../uploads/" . $originalimg;
         if (file_exists($old_image_path) && !empty($originalimg)) {
@@ -43,14 +41,14 @@ if (isset($_POST["btnupdate"])) {
         $tmp_location = $_FILES['image']['tmp_name'];
         $new_location = "../uploads/";
         move_uploaded_file($tmp_location, $new_location . $product_image);
-        $sql = "UPDATE product SET name='$product_name', price='$product_price', qty='$product_quantity', des='$product_description', productimg='$product_image' where productid='$product_id'";
+        $sql = "UPDATE ads SET img='$product_image', name='$product_name', qty='$product_quantity', price='$product_price', des='$product_description' where id='$product_id'";
     } else {
-        $sql = "UPDATE product SET name='$product_name', price='$product_price', qty='$product_quantity', des='$product_description' where productid='$product_id'";
+        $sql = "UPDATE ads SET name='$product_name', qty='$product_quantity', price='$product_price', des='$product_description' where id='$product_id'";
     }
 
     $result = mysqli_query($connection, $sql);
     if ($result) {
-        echo "<script>alert('Product Data Successfully'); window.location.href='products.php';</script>";
+        echo "<script>alert('Ads update successfully'); window.location.href='ads.php';</script>";
         exit();
     } else {
         echo "Error is {$connection->error}";
@@ -87,16 +85,16 @@ if (isset($_POST["btnupdate"])) {
             </thead>
             <tbody>
                     <?php 
-                    $query = "SELECT * FROM product where productid='$product_id'";
+                    $query = "SELECT * FROM ads where id='$product_id'";
                     $productresult = mysqli_query($connection, $query);
                     while ($productrow = mysqli_fetch_array($productresult)) { ?>
                     <tr>
                         <td><input type="text" name="name" value="<?php echo $productrow['name'] ?>"></td>
                         <td><input type="text" name="price" value="<?php echo $productrow['price'] ?>"></td>
-                        <td><input type="text" name="quantity" value="<?php echo $productrow['qty'] ?>"></td>                        
-                        <td><textarea name="description"><?php echo $productrow['des'] ?></textarea></td>
+                        <td><input type="text" name="qty" value="<?php echo $productrow['qty'] ?>"></td>                        
+                        <td><textarea name="des"><?php echo $productrow['des'] ?></textarea></td>
                         <td>
-                            <img src="../uploads/<?php echo $productrow['productimg'] ?>" width="50px" alt="">
+                            <img src="../uploads/<?php echo $productrow['img'] ?>" width="50px" alt="">
                             <input type="file" name="image">
                         </td>
                         <td><input type="submit" name="btnupdate" value="Update"></td>

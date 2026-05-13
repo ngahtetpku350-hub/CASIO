@@ -62,14 +62,68 @@ if (!$productresult) {
                 <li><a href="products.php">Product</a></li>
                 <li><a href="contactmessage.php">Contact Message</a></li>
                 <li><a href="orderlist.php"> Order List</a></li>
+                <li><a href="ads.php"> 
+                    Ads management
+                </a></li>
                 <li><a href="logout.php"> Logout</a></li>
             </ul>
         </nav>
     </div>
-    <form action="products.php" method="post" enctype="multipart/form-data">
-        <div class="add-product-form">
+    <style>
+        .productaddform{
+            background: transparent;
+            display: flex;
+            align-items:center ;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .add-product-input-form{
+            gap: 10px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            border-radius: 40px 5px 40px 5px;
+            padding: 20px;
+            border: 1px solid black;
+        }
+        .outterbox,.innerbox{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+        .innerbox div input{
+            width: 70%;
+            padding: 9px;
+            border-radius: 2px 20px 2px 20px;
+        }
+        .innerbox div{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+       .btnaddproduct{
+            width: 100%;
+            background: blue;
+            padding: 9px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 20px;
+        }
+    </style>
+    <form class="productaddform" action="products.php" method="post" enctype="multipart/form-data">
+        <div class="add-product-input-form">
             <div>
-                <h2>Add Product</h2>
+                <h2 style="color:white;">Add Product</h2>
             </div>
             <div class="outterbox">
                 <div class="innerbox">
@@ -77,7 +131,7 @@ if (!$productresult) {
                         <input type="text" name="name" placeholder="Product Name" required>
                     </div>
                     <div>
-                        <input type="text" name="price" placeholder="Price (USD)" required>
+                        <input type="text" name="price" placeholder="Price (Ks)" required>
                     </div>
                 </div>
                 <div class="innerbox">
@@ -93,17 +147,18 @@ if (!$productresult) {
                 </div>
             </div>
             <div>
-                <input type="submit" name="btnadd" value="Add Product">
+                <input class="btnaddproduct" type="submit" name="btnadd" value="Add Product">
             </div>
         </div>
     </form>
+    <hr>
     <style>
-        /* .table-section{
+        .table-section{
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #000;
+            /* background: #000; */
             padding: 20px;
             flex-direction: column;
         }
@@ -138,12 +193,11 @@ if (!$productresult) {
         }
         .product-search-box:hover{
             width:500px ;
-        } */
+        }
     </style>
     <section class="table-section">
-        <div class="product-search">
-            <input class="product-search-box" type="search" name="" id="" placeholder="Search.....">
-            <input class="btnsearhproduct" type="submit" name="" id="" value="Search">
+        <div>
+            <h2>Products List</h2>
         </div>
         <table class="table">
             <thead>

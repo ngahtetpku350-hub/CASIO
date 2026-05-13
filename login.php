@@ -20,11 +20,11 @@ if (isset($_POST["btnlogin"])) {
 
             header("location: shop.php");
         } else {
-            echo "incorrect password.";
+            echo "<script>alert('Incorrect password'); window.location='login.php';</script>";
         }
     }
     else {
-        echo "email is not register!";
+        echo "<script>alert('Your email is not registered!!'); window.location='register.php';</script>";
 }
 }
 ?>

@@ -22,7 +22,8 @@ if (!isset($_SESSION["email"])) {
 
 $query = "SELECT * from product";
 $result = mysqli_query($connection, $query);
-if ($result) {
+if (!$result) {
+    echo "<script>alert('DATABASE ERROR.');</script>";
     // $row = mysqli_fetch_array($result);
     // $productname = $row['name'];
     // $productprice = $row['price'];
@@ -30,6 +31,14 @@ if ($result) {
     // $productqty = $row['qty'];
     // $productimg = $row['productimg'];
 }
+
+$adsquery = "SELECT * from ads order by id limit 2";
+$adsresult = mysqli_query($connection, $adsquery);
+
+if (!$adsresult) {
+    echo "<script>alert('DATABASE ERROR.');</script>";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +47,7 @@ if ($result) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -46,35 +55,10 @@ if ($result) {
 </head>
 
 <body>
-    <header
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom ">
-        <div class="col-md-3 mb-2 mb-md-0">
-            <a href="index.php" class="d-inline-flex link-body-emphasis text-decoration-none">
-                <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
-            </a>
-        </div>
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="index.php" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="shop.php" class="nav-link px-2">Shop</a></li>
-            <li><a href="about.php" class="nav-link px-2">About</a></li>
-            <li><a href="contact.php" class="nav-link px-2">Contact</a></li>
-        </ul>
-        <div class="col-md-3 text-end">
-            <?php
-            if (!isset($_SESSION["email"])) {
-                echo '<a href="login.php"><button type="button" class="btn btn-outline-primary me-2">Login</button></a>';
-                echo '<a href="register.php"><button type="button" class="btn btn-primary">Sign-up</button></a>';
-            } else {
-                echo '<div class="flexbox">';
-                echo '<h5 class="username" style = "text-align: center;">' . htmlspecialchars($username) . '</h5>';
-                echo '<a href="logout.php"><button type="button" class="btn btn-outline-danger ms-2">Logout</button></a>';
-                echo '</div>';
-            }
-            ?>
-        </div>
-    </header>
+   <div>
+      <?php include("nav.php") ?>
+   </div>
+     <br><br><br>
     <!-- main body -->
     <div class="slidebox">
         <div> <swiper-container class="mySwiper" space-between="30" pagination="true" pagination-clickable="true">
@@ -108,39 +92,60 @@ if ($result) {
             </div>
         </div>
     </section>
-    <!-- Ads -->
-    <div class="ads ads5">
-        <div>
-            <h2>New Model</h2>
-            <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facere, sapiente!
-            </p>
-        </div>
-        <div>
-            <a class="btnbuy" href="buy_page.html">Buy Now</a>
-        </div>
-        <div>
-            <img src="img/bg7.png" alt="ads">
-        </div>
-    </div>
-    <!-- ads close -->
     <br><br><br>
+    <div>
+        <h1 style="text-align: center;">Our Product list</h1>
+    </div>
+    <section class="main_box">
+        <?php while ($row = mysqli_fetch_assoc($result)) {
+            $qty = $row['qty'];
 
-    <!-- product list -->
-    <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-        <div class="product-list-box">
-            <div class="product-card">
-                <img src="uploads/<?php echo $row['productimg']; ?>">
+            
+            if ($qty == 0) {
+                $stock = "Out of stock";
+            } elseif ($qty == 1) {
+                $stock = "Lest Product";
+            } elseif ($qty > 1) {
+                $stock = "Buy Now";
+            } else {
+                $stock = "Avaiable";
+            }
+            ?>
+            <div class="box">
+                <div class="img">
+                    <img src="uploads/<?php echo $row['productimg']; ?>">
+                </div>
                 <div>
-                    <h4><?php echo $row['qty'] ?></h4>
-                    <h1><?php echo $row['name'] ?></h1>
-                    <h3><?php echo $row['price'] ?>KS</h3>
-                    <h4><?php echo $row['des'] ?></h4>
+                    <p style="font-size:20px; font-weight: bold; color: black; margin-top: 20px;">
+                        <?php echo $row['price'] ?>Ks
+                    </p>
+                </div>
+                <div class="product-info">
+                    <div class="model">
+                        <?php echo $row['name'] ?>
+                    </div>
+                    <div class="data" style="margin-top: 20px;">
+                        <div>
+                            <p>Stock:     <?php echo $row['qty'] ?> </p>
+                        </div>
+                        <div class="des">
+                            <p><?php echo $row['des'] ?></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="buy-btn">
+                    <?php if ($qty > 0) { ?>
+                        <a href="buy.php?product_id=<?php echo $row['productid'] ?>">
+                            <?php echo $stock ?>
+                        </a>
+                    <?php } else { ?>
+                        <label style="color:red;" for=""> <?php echo $stock ?></label>
+                    <?php } ?>
                 </div>
             </div>
-        </div>
-    <?php } ?>
-    <!-- product list end -->
+            </div>
+        <?php } ?>
+    </section>
     <footer>
         <div class="contact">
             <div class="desc">
@@ -199,6 +204,8 @@ if ($result) {
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-element-bundle.min.js"></script>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
 
 
 </body>
