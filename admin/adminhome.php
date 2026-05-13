@@ -16,7 +16,7 @@ if (!$result) {
     echo"<script>alert('DATABASE ERROR.');</script>>";
 }
 else{
-
+   
 }
 
 if (mysqli_num_rows($result) > 0) {

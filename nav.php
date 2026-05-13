@@ -1,6 +1,6 @@
 <?php 
 include("connection.php");
-    // session_start();
+// session_start();
 if (isset($_SESSION["email"])) {
 
     $useremail = $_SESSION["email"];
@@ -77,6 +77,160 @@ if (isset($_SESSION["email"])) {
         color: black;
         text-decoration: none;
     }
+
+    /* ========== RESPONSIVE DESIGN ADDED BELOW ========== */
+    
+    @media (max-width: 992px) {
+        header {
+            justify-content: space-between;
+            padding: 0 20px;
+            gap: 20px;
+        }
+        
+        header ul {
+            gap: 25px;
+        }
+        
+        .group-btn {
+            padding: 10px;
+        }
+        
+        .logoutbtn, .loginbtn, .signupbtn {
+            width: 80px;
+            margin-left: 10px;
+            padding: 5px;
+            font-size: 12px;
+        }
+    }
+    
+
+    @media (max-width: 768px) {
+        header {
+            flex-direction: column;
+            height: auto;
+            padding: 15px;
+            gap: 15px;
+            border-radius: 5px 20px 5px 20px;
+        }
+        
+        .logo h2 {
+            font-size: 1.5rem;
+        }
+        
+        header ul {
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        header ul li a {
+            font-size: 14px;
+        }
+        
+        .group-btn {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .logoutbtn, .loginbtn, .signupbtn {
+            width: 90px;
+            margin-left: 0;
+            padding: 6px 10px;
+            font-size: 13px;
+        }
+        
+        .group-btn a {
+            gap: 15px;
+        }
+        
+        .group-btn div {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .group-btn div a:first-child {
+            color: white;
+            text-decoration: none;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+    }
+    
+
+    @media (max-width: 480px) {
+        header {
+            padding: 12px;
+            gap: 12px;
+        }
+        
+        .logo h2 {
+            font-size: 1.2rem;
+        }
+        
+        header ul {
+            gap: 12px;
+        }
+        
+        header ul li a {
+            font-size: 12px;
+        }
+        
+        .logoutbtn, .loginbtn, .signupbtn {
+            width: 75px;
+            padding: 5px 8px;
+            font-size: 11px;
+        }
+        
+        .group-btn div a:first-child {
+            font-size: 12px;
+            padding: 4px 10px;
+        }
+    }
+    
+
+    @media (max-width: 768px) and (orientation: landscape) {
+        header {
+            flex-direction: row;
+            flex-wrap: wrap;
+            height: auto;
+            padding: 10px 20px;
+        }
+        
+        .group-btn {
+            margin-left: auto;
+        }
+    }
+    
+
+    @media (min-width: 1200px) {
+        header {
+            max-width: 1400px;
+            margin: 20px auto 0 auto;
+        }
+    }
+    
+    @media (hover: none) and (pointer: coarse) {
+        .loginbtn:hover, .signupbtn:hover {
+            background: white;
+            color: black;
+        }
+        
+        .loginbtn:active, .signupbtn:active {
+            background: blue;
+            color: white;
+        }
+        
+        header ul li a:active {
+            opacity: 0.7;
+        }
+    }
 </style>
 
 <body>
@@ -93,7 +247,6 @@ if (isset($_SESSION["email"])) {
             <li><a href="contact.php">Contact</a></li>
         </ul>
 
-
         <div class="group-btn">
             <?php
             if (!isset($_SESSION["email"])) {
@@ -102,12 +255,10 @@ if (isset($_SESSION["email"])) {
             } else {
                 echo '<div>';
                 echo '<a href="account.php">' . htmlspecialchars($username) . '</a>';
-
                 echo '<a href="logout.php"><button class="logoutbtn" type="button">Logout</button></a>';
                 echo '</div>';
             }
             ?>
-
         </div>
     </header>
 </body>
